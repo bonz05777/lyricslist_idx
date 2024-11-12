@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lyric.title }} - Lyrics</title>
+    <link rel="icon" type="image/png" href={% static 'images/white.png' %}>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh; /* Set body height to 100% of viewport */
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1db954;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+        }
+        .artist-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2em; /* Slightly larger font size for the artist name */
+            margin-top: 80px; /* Space for fixed header */
+        }
+        .container {
+            height: calc(100vh - 140px); /* Full height minus header and footer */
+            padding: 20px;
+        }
+        .lyrics-scroll {
+            margin-top: 1rem;
+            height: calc(100% - 110px); /* Reduced height to fill container while leaving space for buttons */
+            overflow-y: auto; /* Allow vertical scrolling only in this area */
+        }
+        footer {
+            background-color: #1db954;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        #lyrics-container {
+            background-color: #282828;
+            padding: 20px;
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 1.7em; /* Larger font size for lyrics */
+            font-weight: 300;
+            line-height: 1.6;
+            white-space: pre-line; /* Preserve whitespace and line breaks */
+            text-align: center; /* Center align lyrics */
+        }
+        .stanza {
+            margin: 20px 0; /* Space between stanzas */
+        }
+        .line {
+            transition: color 0.5s ease; /* Smooth transition for color change */
+        }
+        .active {
+            color: #1db954; /* Highlight color for active line */
+        }
+        .btn-warning {
+            background-color: #ffa500;
+            border: none;
+        }
+        .btn-warning:hover {
+            background-color: #ff8c00;
+        }
+        .three-dot-menu {
+            cursor: pointer; /* Change cursor to pointer for the three-dot menu */
+            position: relative; /* Needed for positioning the card */
+        }
+        .slider {
+            display: none; /* Hide the slider by default */
+            position: absolute;
+            right: 0;
+            background-color: rgba(29, 185, 84, 0.9); /* Slightly transparent for a modern look */
+            border-radius: 8px;
+            justify-content: center;
+            width: 150px; /* Increased width for better readability */
+            padding: 10px 15px; /* Slightly more padding */
+            font-size: 14pt; /* Larger font size */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); /* Softer shadow */
+            z-index: 100;
+            animation: slideDown 0.3s ease; /* Slide down animation */
+            text-align: center; /* Center text */
+        }
+        
+        .slider p {
+            margin: 0; /* Remove default margin */
+            font-weight: 500; /* Semi-bold for emphasis */
+            color: #ffffff; /* White color for text */
+            transition: opacity 0.3s; /* Smooth transition for visibility */
+        }
+
+        .slider.active {
+            display: flex; /* Use flex to center contents */
+            opacity: 1; /* Ensure opacity is visible */
+        }
+
+        .copied-message {
+            font-weight: bold; /* Bold for emphasis */
+            font-size: 16pt; /* Slightly larger font size */
+            color: #ffffff; /* White color for contrast */
+            margin-top: 10px; /* Space above message */
+            transition: opacity 0.5s; /* Smooth fade effect */
+        }
+
+        .show-message {
+            opacity: 1; /* Fully visible */
+        }
+
+        .hide-message {
+            opacity: 0; /* Hidden */
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stanza {
+            margin: 60px 0; /* Increased space between stanzas */
+        }
+    </style>
+    <script>
+        let currentLine = 0;
+        const lines = [];
+
+        function setupLyrics() {
+            const lyricsContainer = document.getElementById('lyrics-container');
+            const stanzas = lyricsContainer.innerText.split('\n\n'); // Split into stanzas by double newline
+            const formattedStanzas = stanzas.map(stanza => 
+                `<div class="stanza">${stanza.split('\n').map(line => `<div class="line">${line}</div>`).join('')}</div>`
+            ).join(''); // Wrap lines in divs and separate stanzas
+
+            lyricsContainer.innerHTML = formattedStanzas; // Set formatted lyrics
+            highlightNextLine(); // Start highlighting
+        }
+
+        function highlightNextLine() {
+            const lyricLines = document.querySelectorAll('.line');
+            if (currentLine < lyricLines.length) {
+                lyricLines[currentLine].classList.add('active'); // Highlight current line
+                currentLine++;
+                setTimeout(() => {
+                    lyricLines[currentLine - 1].classList.remove('active'); // Remove highlight from previous line
+                    highlightNextLine(); // Highlight the next line
+                }, 2000); // Adjust time per line as needed
+            }
+        }
+
+        function toggleSlider() {
+            const slider = document.getElementById('slider');
+            slider.classList.toggle('active'); // Toggle the active class to show/hide the slider
+        }
+
+        function copyLyrics() {
+            const lyricsText = `Title: {{ lyric.title }}\nArtist: {{ lyric.artist }}\n\n{{ lyric.lyrics|escapejs }}`;
+            navigator.clipboard.writeText(lyricsText).then(() => {
+                const slider = document.getElementById('slider');
+                const message = document.createElement('div'); // Create a new message div
+                message.className = 'copied-message hide-message'; // Initial hidden state
+                message.innerText = 'Copied!'; // Set message text
+
+                slider.appendChild(message); // Append message to the slider
+
+                // Show the slider and the copied message
+                slider.classList.add('active');
+                message.classList.remove('hide-message');
+
+                setTimeout(() => {
+                    slider.classList.remove('active'); // Hide the slider after a brief moment
+                    message.classList.add('hide-message'); // Fade out the message
+                    setTimeout(() => {
+                        slider.removeChild(message); // Remove the message element from the DOM
+                    }, 500); // Wait for fade out to complete before removing
+                }, 1000);
+            }).catch(err => {
+                console.error('Error copying text: ', err);
+            });
+        }
+
+        window.onload = setupLyrics; // Initialize lyrics on window load
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="{% url 'lyrics_list' %}" class="btn btn-light"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1>{{ lyric.title }}</h1>
+    </div>
+    <div class="container">
+        <div class="artist-container">
+            <h2 style="font-size: 1em;">Artist: {{ lyric.artist }}</h2> <!-- Slightly larger font for artist name -->
+            <!-- Three-dot menu button -->
+            <div class="three-dot-menu" onclick="toggleSlider()">
+                <i class="fas fa-ellipsis-v"></i>
+                <!-- Slider for copy lyrics option -->
+                <div id="slider" class="slider">
+                    <p onclick="copyLyrics()" style="cursor:pointer;">Copy Lyrics</p>
+                </div>
+            </div>
+        </div>
+        <div class="lyrics-scroll"> <!-- Container for lyrics with scroll -->
+            <pre id="lyrics-container">{{ lyric.lyrics }}</pre>
+        </div>
+        <a href="{% url 'lyrics_update' lyric.pk %}" class="btn btn-warning mt-3"><i class="fas fa-edit"></i> Edit</a>
+    </div>
+    <footer>
+        <p>&copy; {{ current_year }} Your Website Name</p>
+    </footer>
+</body>
+</html>
