@@ -1,0 +1,79 @@
+
+body {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text for contrast */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding-bottom: 60px; /* Space for fixed footer */
+}
+.header {
+    background-color: #1db954; /* Spotify green */
+    color: white;
+    padding: 15px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+}
+.header h1 {
+    flex-grow: 1; /* Allows the h1 to take the remaining space */
+    text-align: center;
+    margin: 0;
+}
+.container {
+    margin-top: 80px; /* Space for fixed header */
+    margin-bottom: 40px;
+    padding: 20px;
+}
+.card {
+    background-color: #282828; /* Dark card background */
+    border: none;
+    margin-top: 20px;
+    transition: transform 0.3s;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+.card:hover {
+    transform: scale(1.02);
+}
+footer {
+    background-color: #1db954; /* Spotify green */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.btn-primary {
+    background-color: #1db954; /* Spotify green */
+    border: none; /* Remove border */
+}
+.btn-primary:hover {
+    background-color: #1ed760; /* Slightly lighter green */
+}
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+    display: flex; /* Align label and input horizontally */
+    align-items: center; /* Center items vertically */
+}
+.form-group label {
+    display: block; /* Block display for labels */
+    margin-right: 10px; /* Space between label and input */
+    width: 150px; /* Set a fixed width for labels */
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: calc(100% - 160px); /* Calculate width to fit remaining space */
+    padding: 10px; /* Padding for input fields */
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 4px; /* Rounded corners for input fields */
+    background-color: #383838; /* Darker background for input fields */
+    color: #fff; /* White text for input fields */
+    margin-left: 0; /* Align with label */
+}
