@@ -1,0 +1,266 @@
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 80px 0 60px; 
+}
+
+.header {
+    background-color: #1DB954; 
+    color: white;
+    padding: 20px 20px; 
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 40px; 
+    color: white;
+    flex-grow: 1; 
+    text-align: center; 
+}
+
+.about-section {
+    margin-top: 2rem; 
+    text-align: center; 
+}
+
+h1 {
+    color: #1DB954;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.logo-placeholder {
+    width: 150px; 
+    height: 150px;
+    background-color: #ccc; 
+    display: inline-block; 
+    margin: 1rem auto; 
+}
+
+footer {
+    background-color: #1DB954;
+    color: white;
+    text-align: center;
+    padding: 13px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+ 
+}
+
+footer p {
+    font-size: 16px;
+}
+
+/* Developer Section */
+.developer-info {
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+    padding: 2rem;
+    background-color: #1F1F1F;
+    border-radius: 10px;
+    transition: transform 0.3s ease; 
+  
+}
+
+.developer-info:hover {
+    transform: scale(1.05); 
+}
+
+.developer-image {
+    width: 200px; 
+    height:200px;
+    border-radius: 50%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+.developer-image:hover {
+    transform: rotateY(180deg);
+  }
+
+/* Sliding Menu */
+.menu {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Initially hidden */
+    width: 250px;
+    height: 100%;
+    background-color: #1DB954;
+    color: white;
+    padding-top: 20px;
+    transition: right 0.3s ease;
+    z-index: 1500;
+}
+
+.menu-items {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-top: 50px; 
+}
+
+.menu-items li {
+    padding: 15px;
+    text-align: left;
+    display: flex; 
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menu-items li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+.menu-items li a i {
+    margin-right: 20px;
+}
+
+.menu-items li a:hover {
+    text-decoration: underline;
+}
+
+.close-menu {
+    cursor: pointer; 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: white;
+}
+
+/* Add custom styles for the menu button */
+#menu-toggle {
+    margin-right: 2rem; 
+    padding: 10px;
+}
+.logo-placeholder {
+    width: 150px; 
+    height: 150px; 
+    background-color: #ccc; 
+    display: inline-block;
+    margin: 1rem auto; 
+    transition: transform 0.1s ease;
+    border-radius: 10px; 
+    overflow: hidden; 
+}
+
+
+.logo-placeholder:hover {
+    transform: scale(1.1);
+    animation: borderColorChange 1.5s infinite; 
+}
+.typing-animation {
+    border-right: 2px solid white; 
+    white-space: pre-wrap; 
+    overflow: hidden;
+    animation: caret 0.8s steps(1) infinite; 
+    display: inline-block;
+}
+
+@keyframes caret {
+    50% {
+        border-color: transparent; /* Hide cursor */
+    }
+}
+/* Testimonials Carousel */
+.testimonial-card {
+    background-color: #1F1F1F;
+    border: none;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+.testimonial-rating i {
+    color: gold;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #1DB954;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+/* Card Swipe */
+.carousel-indicators {
+    position: relative;
+    top: 10px;
+}
+
+/* Adding space between the last content and footer */
+.container {
+    margin-bottom: 80px; 
+}
+.statistics-section {
+    margin-top: 4rem;
+    text-align: center;
+    color: white;
+}
+
+.chart-container {
+    margin: 2rem auto;
+}
+.conclusion-section {
+    margin: 4rem 0;
+    padding: 2rem;
+    background-color: #282828; 
+    border-radius: 10px;
+    color: #ffffff;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+    
+}
+
+.conclusion-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.conclusion-section p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+}
+
+.social-icon {
+    color: #1DB954;
+    font-size: 1.5rem; 
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    color: #fff; 
+}
+html {
+    scroll-behavior: smooth;
+}
+
